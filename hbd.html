@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Animation</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            position: relative;
+        }
+        .container {
+            position: relative;
+            font-size: 3rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .word {
+            display: inline-block;
+            margin: 0 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards, colorChange 4s infinite alternate;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes colorChange {
+            0% { color: red; }
+            25% { color: yellow; }
+            50% { color: lime; }
+            75% { color: cyan; }
+            100% { color: magenta; }
+        }
+        @keyframes fireworks {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            opacity: 0;
+            animation: fireworks 1s ease-out forwards;
+        }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background: url('') no-repeat center/contain;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(100vh); opacity: 1; }
+            to { transform: translateY(-10vh); opacity: 0; }
+        }
+        .fade-in {
+            width: 200px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="text"></div>
+    <img src="selamat-ulang-tahun-ultah.gif" alt="Kue Ulang Tahun" class="fade-in">
+    <script>
+        const text = ["HAPPY","BIRTHDAY","DEV"];
+        const container = document.getElementById("text");
+        
+        text.forEach((word, index) => {
+            let wordSpan = document.createElement("span");
+            wordSpan.classList.add("word");
+            wordSpan.innerHTML = word;
+            wordSpan.style.animationDelay = `${index * 0.5}s`;
+            container.appendChild(wordSpan);
+        });
+
+        function createFireworks() {
+            for (let i = 0; i < 10; i++) {
+                let firework = document.createElement("div");
+                firework.classList.add("firework");
+                firework.style.left = Math.random() * 100 + "vw";
+                firework.style.top = Math.random() * 100 + "vh";
+                firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                firework.style.animationDuration = (Math.random() * 1.5 + 0.5) + "s";
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+        setInterval(createFireworks, 500);
+        
+        function createBalloons() {
+            for (let i = 0; i < 5; i++) {
+                let balloon = document.createElement("div");
+                balloon.classList.add("balloon");
+                balloon.style.left = Math.random() * 100 + "vw";
+                balloon.style.animationDuration = (Math.random() * 3 + 3) + "s";
+                document.body.appendChild(balloon);
+                setTimeout(() => balloon.remove(), 5000);
+            }
+        }
+        setInterval(createBalloons, 1000);
+    </script>
+</body>
+</html>
